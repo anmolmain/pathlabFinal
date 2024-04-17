@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-12">
+        <div class="card shadow">
+          <div class="card-header text-white" style="background-color: #4CAF50;">
+            <h1 class="mb-0">All Tests</h1>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>Patient Name</th>
+                    <th>Sample Collection Date</th>
+                    <th>Result required</th>
+                    <th>Payment</th>
+                    <th>Status</th>
+                    <th>Test ID</th>
+                    <th>Copy Test ID</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for appointment in appointments %}
+                    <tr>
+                      <td>{{ appointment.name }}</td>
+                      <td>{{ appointment.sample_collection_date }}</td>
+                      <td>{{ appointment.result_required_date }}</td>
+                      <td>{{ appointment.payment_method }}</td>
+                      <td>{{ appointment.status }}</td>
+                      <td>{{ appointment.test_id }}</td>
+                      <td>
+                        <button class="btn btn-primary copy-btn" data-clipboard-text="{{ appointment.test_id }}">Copy to Clipboard</button>
+                      </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                      <td colspan="3" class="text-center">No tests found.</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var copyButtons = document.querySelectorAll('.copy-btn')
+    
+      copyButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+          var textToCopy = this.getAttribute('data-clipboard-text')
+          navigator.clipboard
+            .writeText(textToCopy)
+            .then(function () {
+              alert('Copied to clipboard!')
+            })
+            .catch(function (err) {
+              console.error('Failed to copy: ', err)
+            })
+        })
+      })
+    })
+  </script>
+{% endblock %}

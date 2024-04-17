@@ -1,0 +1,250 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+        }
+        .form-control {
+            color: black;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            font-weight: bold;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+    </style>
+
+<div class="mt-2">
+    <h1 style="font-weight: 600;">Book an Appointment</h1>
+
+    <form method="post" action="{% url 'bookappointment' %}" class="needs-validation row" novalidate>
+        {% csrf_token %}
+
+        <!-- Personal Information -->
+        <div class="form-group col-md-6">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" name="name" required />
+        </div>
+        
+        <div class="form-group col-md-6">
+            <label for="dob">Date of Birth:</label>
+            <input type="date" class="form-control" id="dob" name="dob" required />
+        </div>
+        
+        <div class="form-group col-md-6">
+            <label for="gender">Gender:</label>
+            <select class="form-control" id="gender" name="gender" required>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+        
+        <div class="form-group col-md-6">
+            <label for="hospital_name">Hospital Name:</label>
+            <input type="text" class="form-control" id="hospital_name" name="hospital_name" required />
+        </div>
+        
+        <div class="form-group col-md-6">
+            <label for="contact">Contact:</label>
+            <input type="tel" class="form-control" id="contact" name="contact" required />
+        </div>
+        
+        <div class="form-group col-md-6">
+            <label for="email">Email:</label>
+            <input type="text" class="form-control" id="email" name="email" required />
+        </div>
+        
+        <div class="form-group col-md-6">
+            <label for="address">Address:</label>
+            <textarea class="form-control" id="address" name="address" required></textarea>
+        </div>
+        
+        <div class="form-group col-md-6">
+            <label for="patient_info">Patient username:</label>
+            <textarea class="form-control" id="patient_info" name="patient_info" readonly >{{ request.user.username }}
+            </textarea>
+        </div>
+
+        <!-- Tests Information -->
+        <div class="form-group row" >
+          <label>Tests List:</label><br />
+          
+          <!-- CBC -->
+          <div class="form-check col-sm-3">
+              <input type="checkbox" class="form-check-input" id="cbc" name="cbc" {% if form.cbc.value %}checked{% endif %}>
+              <label class="form-check-label" for="cbc">CBC</label>
+          </div>
+      
+          <!-- BMP -->
+          <div class="form-check col-sm-3">
+              <input type="checkbox" class="form-check-input" id="bmp" name="bmp" {% if form.bmp.value %}checked{% endif %}>
+              <label class="form-check-label" for="bmp">BMP</label>
+          </div>
+      
+          <!-- LFTs -->
+          <div class="form-check col-sm-3">
+              <input type="checkbox" class="form-check-input" id="lfts" name="lfts" {% if form.lfts.value %}checked{% endif %}>
+              <label class="form-check-label" for="lfts">LFTs</label>
+          </div>
+      
+          <!-- Lipid Profile -->
+          <div class="form-check col-sm-3">
+              <input type="checkbox" class="form-check-input" id="lipid_profile" name="lipid_profile" {% if form.lipid_profile.value %}checked{% endif %}>
+              <label class="form-check-label" for="lipid_profile">Lipid Profile</label>
+          </div>
+      
+          <!-- Thyroid Tests -->
+          <div class="form-check col-sm-3">
+              <input type="checkbox" class="form-check-input" id="thyroid_tests" name="thyroid_tests" {% if form.thyroid_tests.value %}checked{% endif %}>
+              <label class="form-check-label" for="thyroid_tests">Thyroid Tests</label>
+          </div>
+      
+          <!-- Blood Glucose -->
+          <div class="form-check col-sm-3">
+              <input type="checkbox" class="form-check-input" id="blood_glucose" name="blood_glucose" {% if form.blood_glucose.value %}checked{% endif %}>
+              <label class="form-check-label" for="blood_glucose">Blood Glucose</label>
+          </div>
+      
+          <!-- Urinalysis -->
+          <div class="form-check col-sm-3">
+              <input type="checkbox" class="form-check-input" id="urinalysis" name="urinalysis" {% if form.urinalysis.value %}checked{% endif %}>
+              <label class="form-check-label" for="urinalysis">Urinalysis</label>
+          </div>
+      
+          <!-- Stool Analysis -->
+          <div class="form-check col-sm-3">
+              <input type="checkbox" class="form-check-input" id="stool_analysis" name="stool_analysis" {% if form.stool_analysis.value %}checked{% endif %}>
+              <label class="form-check-label" for="stool_analysis">Stool Analysis</label>
+          </div>
+      
+          <!-- Coagulation Profile -->
+          <div class="form-check col-sm-3">
+              <input type="checkbox" class="form-check-input" id="coagulation_profile" name="coagulation_profile" {% if form.coagulation_profile.value %}checked{% endif %}>
+              <label class="form-check-label" for="coagulation_profile">Coagulation Profile</label>
+          </div>
+      
+          <!-- Serum Electrolytes -->
+          <div class="form-check col-sm-3">
+              <input type="checkbox" class="form-check-input" id="serum_electrolytes" name="serum_electrolytes" {% if form.serum_electrolytes.value %}checked{% endif %}>
+              <label class="form-check-label" for="serum_electrolytes">Serum Electrolytes</label>
+          </div>
+      
+          <!-- CRP -->
+          <div class="form-check col-sm-3">
+              <input type="checkbox" class="form-check-input" id="crp" name="crp" {% if form.crp.value %}checked{% endif %}>
+              <label class="form-check-label" for="crp">CRP</label>
+          </div>
+      
+          <!-- Rheumatoid Factor -->
+          <div class="form-check col-sm-3">
+              <input type="checkbox" class="form-check-input" id="rheumatoid_factor" name="rheumatoid_factor" {% if form.rheumatoid_factor.value %}checked{% endif %}>
+              <label class="form-check-label" for="rheumatoid_factor">Rheumatoid Factor</label>
+          </div>
+      
+          <!-- PT/INR -->
+          <div class="form-check col-sm-3">
+              <input type="checkbox" class="form-check-input" id="pt_inr" name="pt_inr" {% if form.pt_inr.value %}checked{% endif %}>
+              <label class="form-check-label" for="pt_inr">PT/INR</label>
+          </div>
+      
+          <!-- HbA1c -->
+          <div class="form-check col-sm-3">
+              <input type="checkbox" class="form-check-input" id="hba1c" name="hba1c" {% if form.hba1c.value %}checked{% endif %}>
+              <label class="form-check-label" for="hba1c">HbA1c</label>
+          </div>
+      
+          <!-- Vitamin D -->
+          <div class="form-check col-sm-3">
+              <input type="checkbox" class="form-check-input" id="vitamin_d" name="vitamin_d" {% if form.vitamin_d.value %}checked{% endif %}>
+              <label class="form-check-label" for="vitamin_d">Vitamin D</label>
+          </div>
+      
+          <!-- HIV Antibody -->
+          <div class="form-check col-sm-3">
+              <input type="checkbox" class="form-check-input" id="hiv_antibody" name="hiv_antibody" {% if form.hiv_antibody.value %}checked{% endif %}>
+              <label class="form-check-label" for="hiv_antibody">HIV Antibody</label>
+          </div>
+      
+          <!-- Hepatitis Panel -->
+          <div class="form-check col-sm-3">
+              <input type="checkbox" class="form-check-input" id="hepatitis_panel" name="hepatitis_panel" {% if form.hepatitis_panel.value %}checked{% endif %}>
+              <label class="form-check-label" for="hepatitis_panel">Hepatitis Panel</label>
+          </div>
+      
+          <!-- Tumor Marker -->
+          <div class="form-check col-sm-3">
+              <input type="checkbox" class="form-check-input" id="tumor_marker" name="tumor_marker" {% if form.tumor_marker.value %}checked{% endif %}>
+              <label class="form-check-label" for="tumor_marker">Tumor Marker</label>
+          </div>
+      
+          <!-- Autoimmune Tests -->
+          <div class="form-check col-sm-3">
+              <input type="checkbox" class="form-check-input" id="autoimmune_tests" name="autoimmune_tests" {% if form.autoimmune_tests.value %}checked{% endif %}>
+              <label class="form-check-label" for="autoimmune_tests">Autoimmune Tests</label>
+          </div>
+      
+          <!-- Serum Protein -->
+          <div class="form-check col-sm-3">
+              <input type="checkbox" class="form-check-input" id="serum_protein" name="serum_protein" {% if form.serum_protein.value %}checked{% endif %}>
+              <label class="form-check-label" for="serum_protein">Serum Protein</label>
+          </div>
+      </div>
+      
+        <!-- Sample Collection Information -->
+        <div class="form-group col-md-4">
+            <label for="sample_collection_date">Sample Collection Date:</label>
+            <input type="date" class="form-control" id="sample_collection_date" name="sample_collection_date" required />
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="sample_collection_time">Sample Collection Time:</label>
+            <input type="time" class="form-control" id="sample_collection_time" name="sample_collection_time" required />
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="specimen_type">Specimen Type:</label>
+            <input type="text" class="form-control" id="specimen_type" name="specimen_type" required />
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="result_required_date">Result Required Date:</label>
+            <input type="date" class="form-control" id="result_required_date" name="result_required_date" required />
+        </div>
+
+        <!-- Payment and Status Information -->
+        <div class="form-group col-md-4">
+            <label for="payment_method">Payment Method:</label>
+                <select class="form-control" id="payment_method" name="payment_method" required>
+                    <option value="Male">cash deposit at lab</option>
+                    <option value="Female">payment during specimen pickup</option>
+                </select>
+        </div>
+
+        <input type="hidden" name="status" value="Not Started" />
+
+        <button type="submit" class="btn btn-primary m-auto">Book Appointment</button>
+    </form>
+</div>
+
+<!-- Bootstrap and JavaScript libraries -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+{% endblock%}

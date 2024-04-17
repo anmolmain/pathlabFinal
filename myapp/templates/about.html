@@ -1,0 +1,185 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <style>
+    /* Custom Styles */
+    #banner {
+      background-color: #4CAF50; /* Green shade */
+      color: white;
+      padding: 50px 0;
+    }
+    
+    #about,
+    #services,
+    #team,
+    #contact {
+      margin-top: 50px;
+      margin-bottom: 50px;
+    }
+    
+    #services .card,
+    #team .card {
+      margin-bottom: 30px;
+    }
+    
+    #contact ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    
+    #contact ul li {
+      margin-bottom: 10px;
+    }
+
+    .card-body {
+      background-color: #f8f9fa; /* Light gray background */
+    }
+  </style>
+  
+  <div class="container mt-5">
+    <h1 class="text-center">Welcome to The Pathological Lab</h1>
+    
+    <!-- Banner Section -->
+    <section id="banner" data-aos="fade-up" data-aos-duration="400">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <p class="lead">Providing accurate diagnostic services with state-of-the-art technology.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="mt-5" data-aos="fade-up" data-aos-duration="400">
+      <div class="row">
+        <div class="col-md-6">
+          <h2>About Us</h2>
+          <p>THE Pathological Lab is a leading diagnostic center committed to delivering high-quality and accurate diagnostic services to our patients. With a team of skilled professionals and state-of-the-art technology, we aim to provide reliable and timely results to assist in better healthcare outcomes.</p>
+          <p>We offer a wide range of pathological tests, including blood tests, urine tests, genetic tests, and more, ensuring comprehensive diagnostic solutions for various health concerns.</p>
+        </div>
+        <div class="col-md-6">
+          <img src="https://images.pexels.com/photos/3825368/pexels-photo-3825368.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="About Us Image" class="img-fluid rounded" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="mt-5" data-aos="fade-up" data-aos-duration="400">
+      <h2 class="text-center mb-4">Our Team</h2>
+      <div class="row" id="team-members">
+        <!-- Team members will be dynamically loaded here -->
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="mt-5" data-aos="fade-up" data-aos-duration="400">
+      <h2 class="text-center mb-4">Our Services</h2>
+      <div class="row" id="services-list">
+        <!-- Services will be dynamically loaded here -->
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="mt-5" data-aos="fade-up" data-aos-duration="400">
+      <h2 class="text-center mb-4">Contact Us</h2>
+      <div class="row">
+        <div class="col-md-6">
+          <img src="https://images.pexels.com/photos/2280571/pexels-photo-2280571.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Contact Us Image" class="img-fluid rounded mb-4" />
+        </div>
+        <div class="col-md-6">
+          <p>If you have any questions or would like to schedule an appointment, please feel free to contact us. Our team is here to assist you.</p>
+          <ul>
+            <li>
+              <strong>Phone:</strong> +1234567890
+            </li>
+            <li>
+              <strong>Email:</strong> info@THEpathologicallab.com
+            </li>
+            <li>
+              <strong>Address:</strong> 123 Lab Street, City, Country
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    $(document).ready(function(){
+      AOS.init();
+
+      // Dummy data for team members and services
+      var teamMembers = [
+        {
+          name: 'Dr. John Doe',
+          role: 'Pathologist',
+          image: 'https://images.pexels.com/photos/2280571/pexels-photo-2280571.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+        },
+        {
+          name: 'Dr. Jane Smith',
+          role: 'Senior Pathologist',
+          image: 'https://images.pexels.com/photos/248152/pexels-photo-248152.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+        },
+        {
+          name: 'Dr. Emily Brown',
+          role: 'Lab Technician',
+          image: 'https://images.pexels.com/photos/3735718/pexels-photo-3735718.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+        }
+      ];
+
+      var services = [
+        {
+          name: 'Blood Tests',
+          description: 'Blood tests to evaluate your overall health.',
+          image: 'https://images.pexels.com/photos/8940479/pexels-photo-8940479.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+        },
+        {
+          name: 'Genetic Testing',
+          description: 'Advanced genetic tests to identify genetic disorders.',
+          image: 'https://images.pexels.com/photos/4230623/pexels-photo-4230623.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+        },
+        {
+          name: 'Urine Tests',
+          description: 'Accurate urine tests for various health conditions.',
+          image: 'https://images.pexels.com/photos/2280549/pexels-photo-2280549.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+        }
+      ];
+
+      // Dynamically load team members
+      teamMembers.forEach(function(member){
+        var teamMemberHtml = `
+          <div class="col-md-4">
+            <div class="card">
+              <img src="${member.image}" class="card-img-top" alt="${member.name}" />
+              <div class="card-body">
+                <h5 class="card-title">${member.name}</h5>
+                <p class="card-text">${member.role}</p>
+              </div>
+            </div>
+          </div>
+        `;
+        $('#team-members').append(teamMemberHtml);
+      });
+
+      // Dynamically load services
+      services.forEach(function(service){
+        var serviceHtml = `
+          <div class="col-md-4">
+            <div class="card">
+              <img src='${service.image}' class="card-img-top" alt="${service.name}" />
+              <div class="card-body">
+                <h5 class="card-title">${service.name}</h5>
+                <p class="card-text">${service.description}</p>
+              </div>
+            </div>
+          </div>
+        `;
+        $('#services-list').append(serviceHtml);
+      });
+    });
+  </script>
+{% endblock %}

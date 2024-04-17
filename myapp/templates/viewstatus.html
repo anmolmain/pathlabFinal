@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="container mt-3 bgdiv">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card shadow greenish-bg">
+          <div class="card-header text-white" style="background-color: #4CAF50;">
+            <h1 class="mb-0">Check Test Status</h1>
+          </div>
+          <div class="card-body">
+            <form method="post" class="needs-validation" novalidate>
+              {% csrf_token %}
+              <div class="mb-4">
+                <label for="test_id" class="form-label">Test ID:</label>
+                <input type="text" class="form-control form-control-lg" id="test_id" name="test_id" required  autocomplete="off"/>
+                <div class="invalid-feedback">Please enter a valid Test ID.</div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg btn-block">Check Status</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% if status %}
+      <div class="row mt-5">
+        <div class="col-md-10 offset-md-1">
+          <div class="card shadow-sm greenish-bg">
+            <!-- Added greenish-bg class -->
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <h5 class="mb-2">Status for Test ID: <span class="text-primary">{{ test_id }}</span></h5>
+                  <div class="status-icon">
+                    <i class="bi bi-check-circle-fill text-success" id="status-icon"></i>
+                  </div>
+                  <h5 class="status-text mb-2">Status: <span class="text-primary">{{ status }}</span></h5>
+                  <h5 class="status-text mb-2">Report URL: <span class="text-primary"><a href="{{report_url}}" target="_blank">{{report_url}}</a></span></h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block extra_js %}
+  <script>
+    // Add animation to the status icon
+    document.addEventListener('DOMContentLoaded', function () {
+      const statusIcon = document.getElementById('status-icon')
+      if (statusIcon) {
+        statusIcon.classList.add('animate__animated', 'animate__bounceIn')
+      }
+    })
+  </script>
+{% endblock %}
+
+{% block extra_css %}
+  <style>
+    .greenish-bg {
+      background-color: rgba(144, 238, 144, 0.2); /* Greenish background color */
+    }
+    .bgdiv {
+      background: url(https://images.pexels.com/photos/207601/pexels-photo-207601.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);
+      width: 100vw;
+      height: 100vh;
+    }
+  </style>
+{% endblock %}

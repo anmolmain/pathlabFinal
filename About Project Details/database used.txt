@@ -1,0 +1,36 @@
+our Django application utilizes SQLite as its database backend. SQLite is a lightweight, serverless, self-contained database engine that requires minimal setup, making it ideal for development and small-scale applications.
+
+In this project, the SQLite database stores all the essential data related to user accounts and their respective appointments. The `AllAppointments` model captures a comprehensive set of appointment details, including personal information, selected tests, appointment timings, and status. Each appointment is uniquely identified by a UUID field, ensuring data integrity and avoiding duplicate entries.
+
+SQLite's simplicity is advantageous for this project as it eliminates the need for a separate database server, reducing complexity and deployment requirements. The database is defined in the project's settings, pointing to a file named `db.sqlite3` located in the project's root directory. Django's ORM (Object-Relational Mapping) abstracts the database operations, allowing developers to interact with the database using Python code rather than SQL queries, enhancing code readability and maintainability. Despite its lightweight nature, SQLite offers robust ACID (Atomicity, Consistency, Isolation, Durability) compliance, ensuring data reliability and transactional integrity for the application's operations.
+
+The SQLite database in the Django application contains a primary model named `AllAppointments`. This model represents the core entity of the application, capturing various attributes related to medical appointments.
+
+**Fields in the `AllAppointments` Model:**
+
+- **Personal Information:** 
+  - `name`: CharField to store the name of the patient.
+  - `dob`: DateField for the patient's date of birth.
+  - `gender`: ChoiceField with options for Male, Female, or Other.
+  - `hospital_name`: CharField to specify the hospital or clinic name.
+  - `contact`: CharField for the patient's contact number.
+  - `email`: EmailField to store the patient's email address.
+  - `address`: TextField for the patient's address.
+  - `patient_info`: TextField for any additional patient information.
+
+- **Tests Selection:** 
+  - BooleanFields for various medical tests like `cbc`, `bmp`, `lfts`, `lipid_profile`, etc. Each represents a specific medical test, allowing multiple tests to be selected for an appointment.
+
+- **Appointment Details:** 
+  - `sample_collection_date` and `sample_collection_time`: DateField and TimeField respectively, for when the sample will be collected.
+  - `specimen_type`: CharField to specify the type of specimen.
+  - `result_required_date`: DateField for the date when the test results are required.
+
+- **Payment and Status:** 
+  - `payment_method`: CharField with choices like 'cash while specimen taking', 'Pre-payment', 'Lab visit'.
+  - `status`: CharField with choices representing the status of the appointment, from 'Booked specimen taking request' to 'Report generation in progress'.
+
+- **Unique Identifier:** 
+  - `test_id`: UUIDField that provides a unique identifier for each appointment, ensuring data uniqueness and integrity.
+
+The model is structured to capture comprehensive details about each appointment, enabling efficient management and retrieval of information.
