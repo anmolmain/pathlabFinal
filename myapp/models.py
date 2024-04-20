@@ -14,9 +14,8 @@ class AllAppointments(models.Model):
     )
     
     PAYMENT_CHOICES = (
-        ('cash while specimen taking', 'cash while specimen taking'),
-        ('Pre-payment', 'Pre-payment'),
-        ('Lab visit', 'Lab visit'),
+        ('cash deposit at lab', 'cash deposit at lab'),
+        ('payment during specimen pickup', 'payment during specimen pickup'),
     )
        
     name = models.CharField(max_length=255)
