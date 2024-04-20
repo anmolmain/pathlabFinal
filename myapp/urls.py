@@ -12,6 +12,7 @@ urlpatterns = [
     path("bookappointment", views.bookappointment, name="bookappointment"),
     path('viewstatus', views.viewstatus, name='viewstatus'),
         path('alltest/', views.alltest, name='alltest'),
+        path('formsubmitted/', views.formsubmitted, name='alltest'),
 
 
 ]

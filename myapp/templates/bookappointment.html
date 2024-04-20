@@ -28,57 +28,57 @@
         }
     </style>
 
-<div class="mt-2">
-    <h1 style="font-weight: 600;">Book an Appointment</h1>
+    <div class="mt-2">
+        <h1 style="font-weight: 600;">Book an Appointment</h1>
 
-    <form method="post" action="{% url 'bookappointment' %}" class="needs-validation row" novalidate>
-        {% csrf_token %}
+        <form id="appointmentForm" method="post" action="{% url 'bookappointment' %}" class="needs-validation row" novalidate>
+            {% csrf_token %}
 
-        <!-- Personal Information -->
-        <div class="form-group col-md-6">
-            <label for="name">Name:</label>
-            <input type="text" class="form-control" id="name" name="name" required />
-        </div>
-        
-        <div class="form-group col-md-6">
-            <label for="dob">Date of Birth:</label>
-            <input type="date" class="form-control" id="dob" name="dob" required />
-        </div>
-        
-        <div class="form-group col-md-6">
-            <label for="gender">Gender:</label>
-            <select class="form-control" id="gender" name="gender" required>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-            </select>
-        </div>
-        
-        <div class="form-group col-md-6">
-            <label for="hospital_name">Hospital Name:</label>
-            <input type="text" class="form-control" id="hospital_name" name="hospital_name" required />
-        </div>
-        
-        <div class="form-group col-md-6">
-            <label for="contact">Contact:</label>
-            <input type="tel" class="form-control" id="contact" name="contact" required />
-        </div>
-        
-        <div class="form-group col-md-6">
-            <label for="email">Email:</label>
-            <input type="text" class="form-control" id="email" name="email" required />
-        </div>
-        
-        <div class="form-group col-md-6">
-            <label for="address">Address:</label>
-            <textarea class="form-control" id="address" name="address" required></textarea>
-        </div>
-        
-        <div class="form-group col-md-6">
-            <label for="patient_info">Patient username:</label>
-            <textarea class="form-control" id="patient_info" name="patient_info" readonly >{{ request.user.username }}
-            </textarea>
-        </div>
+            <!-- Personal Information -->
+            <div class="form-group col-md-6">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" name="name" required />
+            </div>
+            
+            <div class="form-group col-md-6">
+                <label for="dob">Date of Birth:</label>
+                <input type="date" class="form-control" id="dob" name="dob" required />
+            </div>
+            
+            <div class="form-group col-md-6">
+                <label for="gender">Gender:</label>
+                <select class="form-control" id="gender" name="gender" required>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group col-md-6">
+                <label for="hospital_name">Referred by Hospital Name: <sup>optional</sup></label>
+                <input type="text" class="form-control" id="hospital_name" name="hospital_name" value="None" />
+            </div>
+            
+            <div class="form-group col-md-6">
+                <label for="contact">Contact:</label>
+                <input type="text" class="form-control" id="contact" name="contact" required />
+            </div>
+            
+            <div class="form-group col-md-6">
+                <label for="email">Email:</label>
+                <input type="text" class="form-control" id="email" name="email" required />
+            </div>
+            
+            <div class="form-group col-md-6">
+                <label for="address">Address:</label>
+                <textarea class="form-control" id="address" name="address" required></textarea>
+            </div>
+            
+            <div class="form-group col-md-6" style="display: none;">
+                <label for="patient_info">Patient username:</label>
+                <textarea class="form-control" id="patient_info" name="patient_info" readonly >{{ request.user.username }}
+                </textarea>
+            </div>
 
         <!-- Tests Information -->
         <div class="form-group row" >
@@ -237,14 +237,50 @@
 
         <input type="hidden" name="status" value="Not Started" />
 
-        <button type="submit" class="btn btn-primary m-auto">Book Appointment</button>
-    </form>
-</div>
+            <button type="submit" class="btn btn-primary m-auto">Book Appointment</button>
+        </form>
+    </div>
 
-<!-- Bootstrap and JavaScript libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#appointmentForm').submit(function(e) {
+                var isValid = true;
 
-</body>
-{% endblock%}
+                // Validate required fields
+                $('.form-control[required]').each(function() {
+                    if ($(this).val() === '') {
+                        isValid = false;
+                        $(this).addClass('is-invalid');
+                    } else {
+                        $(this).removeClass('is-invalid');
+                    }
+                });
+
+                // Custom validation for contact and email
+                var contactRegex = /^[0-9]{10}$/;
+                if (!contactRegex.test($('#contact').val())) {
+                    $('#contact').addClass('is-invalid');
+                    isValid = false;
+                }
+
+                var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                if (!emailRegex.test($('#email').val())) {
+                    $('#email').addClass('is-invalid');
+                    isValid = false;
+                }
+
+                if (!isValid) {
+                    e.preventDefault(); // Prevent form submission if validation fails
+                }
+            });
+
+            // Remove is-invalid class on input change
+            $('.form-control').change(function() {
+                $(this).removeClass('is-invalid');
+            });
+        });
+    </script>
+{% endblock %}

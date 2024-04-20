@@ -10,10 +10,17 @@ from myapp.models import AllAppointments
 from .forms import AppointmentForm
 
 
-# Home view
+# Home view0
 def home(request):
     try:
         return render(request, "home.html")
+    except Exception as e:
+        messages.error(request, str(e))
+        return redirect("/")
+# Home view0
+def formsubmitted(request):
+    try:
+        return render(request, "formsubmitted.html")
     except Exception as e:
         messages.error(request, str(e))
         return redirect("/")
@@ -167,7 +174,7 @@ def bookappointment(request):
                 result_required_date=result_required_date
             )
             appointment.save()
-            return redirect('about')  # Redirect to a success page
+            return redirect('formsubmitted')  # Redirect to a success page
     else:
         form = AppointmentForm()
     

@@ -5,99 +5,115 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-  <div class="container mt-5">
-    <!-- Introduction Section -->
-    <section id="introduction" data-aos="fade-up" data-aos-duration="100">
-      <div class="row">
-        <div class="col-md-6">
-          <h1 class="text-success">Welcome to Our State-of-the-Art Laboratory</h1>
-          <p class="">Explore the wonders of science and innovation in our state-of-the-art laboratory. We offer a diverse range of cutting-edge equipment and resources tailored to fuel your research and experiments. Whether you're conducting complex experiments, analyzing intricate data, or innovating groundbreaking solutions, our laboratory is fully equipped to support your every need. Dive into a world where curiosity meets capability, and let us be your partner in scientific discovery and advancement.</p>
-          <p class="lead">Whether you're conducting experiments, analyzing data, or innovating new solutions, our laboratory is equipped to support your needs.</p>
-          <a href="/login" class="btn btn-success">Get Started</a>
+<div class="container mt-5">
+  {% if not user.is_authenticated %}
+      <!-- Introduction Section -->
+      <section id="introduction" data-aos="fade-up" data-aos-duration="100">
+        <div class="row">
+          <div class="col-md-6">
+            <h1 class="text-success">Welcome to Our State-of-the-Art Laboratory</h1>
+            <p class="">Explore the wonders of science and innovation in our state-of-the-art laboratory. We offer a diverse range of cutting-edge equipment and resources tailored to fuel your research and experiments. Whether you're conducting complex experiments, analyzing intricate data, or innovating groundbreaking solutions, our laboratory is fully equipped to support your every need. Dive into a world where curiosity meets capability, and let us be your partner in scientific discovery and advancement.</p>
+            <p class="lead">Whether you're conducting experiments, analyzing data, or innovating new solutions, our laboratory is equipped to support your needs.</p>
+            <a href="/login" class="btn btn-success">Get Started</a>
+          </div>
+          <div class="col-md-6">
+            <img src="https://images.pexels.com/photos/256262/pexels-photo-256262.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Laboratory Image" class="img-fluid rounded" />
+          </div>
         </div>
-        <div class="col-md-6">
-          <img src="https://images.pexels.com/photos/256262/pexels-photo-256262.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Laboratory Image" class="img-fluid rounded" />
+      </section>
+      {% else %}
+      <section id="introduction container" data-aos="fade-up" data-aos-duration="100">
+        <div class="row">
+          <div class="col-md-6">
+            <h1 class="text-success">Discover Our Advanced Research Facility</h1>
+            <p class="">Step into our cutting-edge research facility and unlock the potential of scientific exploration. With an extensive array of modern equipment and resources, we're committed to empowering your research endeavors. Whether you're delving into intricate experiments, dissecting complex data sets, or pioneering innovative solutions, our facility is meticulously designed to cater to your requirements. Embark on a journey where inquiry meets ingenuity, and let us amplify your pursuit of scientific excellence and breakthroughs.</p>
+            <p class="lead">From hands-on experiments to data analysis and innovation, our facility is tailored to meet all your research needs.</p>
+            <a href="/bookappointment" class="btn btn-success">Book appointment</a>
         </div>
-      </div>
-    </section>
+        
+          <div class="col-md-6">
+            <img src="https://images.pexels.com/photos/256262/pexels-photo-256262.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Laboratory Image" class="img-fluid rounded" />
+          </div>
+        </div>
+      </section>
+      <!-- Equipment Section -->
+      <section id="equipment" class="mt-5" data-aos="fade-up" data-aos-duration="100">
+        <h1 class="text-center mb-4 text-success">Precise Results with Latest Equipment</h1>
+        <p class="lead">Explore the wonders of science and innovation at our state-of-the-art laboratory. We provide a comprehensive range of diagnostic services, supported by cutting-edge technology and a team of skilled professionals. Whether you're conducting experiments, analyzing data, or seeking precise medical tests, our lab is equipped to meet your needs.</p>
+        <div class="row">
+          {% for equipment in equipments %}
+            <div class="col-md-4 mb-0">
+              <div class="card border-success">
+                <img src="{{ equipment.image.url }}" class="card-img-top" alt="{{ equipment.equipment_name }}" />
+                <div class="card-body">
+                  <h5 class="card-title text-success">{{ equipment.equipment_name }}</h5>
+                  <p class="card-text">{{ equipment.description }}</p>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </section>
 
-    <!-- Equipment Section -->
-    <section id="equipment" class="mt-5" data-aos="fade-up" data-aos-duration="100">
-      <h1 class="text-center mb-4 text-success">Precise Results with Latest Equipment</h1>
-      <p class="lead">Explore the wonders of science and innovation at our state-of-the-art laboratory. We provide a comprehensive range of diagnostic services, supported by cutting-edge technology and a team of skilled professionals. Whether you're conducting experiments, analyzing data, or seeking precise medical tests, our lab is equipped to meet your needs.</p>
-      <div class="row">
-        {% for equipment in equipments %}
-          <div class="col-md-4 mb-0">
+      <!-- Services Section -->
+      <section id="services" class="mt-5" data-aos="fade-up" data-aos-duration="100">
+        <h1 class="text-center mb-4 text-success">Our Services</h1>
+        <div class="row">
+          <div class="col-md-4">
             <div class="card border-success">
-              <img src="{{ equipment.image.url }}" class="card-img-top" alt="{{ equipment.equipment_name }}" />
+              <img src="https://images.pexels.com/photos/8940479/pexels-photo-8940479.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" class="card-img-top" alt="Service 1" />
               <div class="card-body">
-                <h5 class="card-title text-success">{{ equipment.equipment_name }}</h5>
-                <p class="card-text">{{ equipment.description }}</p>
+                <h5 class="card-title text-success">Blood Tests</h5>
+                <p class="card-text">Blood tests to evaluate your overall health.</p>
               </div>
             </div>
           </div>
-        {% endfor %}
-      </div>
-    </section>
+          <div class="col-md-4">
+            <div class="card border-success">
+              <img src="https://images.pexels.com/photos/3735763/pexels-photo-3735763.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" class="card-img-top" alt="Service 2" />
+              <div class="card-body">
+                <h5 class="card-title text-success">Genetic Testing</h5>
+                <p class="card-text">Advanced genetic tests to identify genetic disorders.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card border-success">
+              <img src="https://images.pexels.com/photos/954585/pexels-photo-954585.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" class="card-img-top" alt="Service 3" />
+              <div class="card-body">
+                <h5 class="card-title text-success">Urine Tests</h5>
+                <p class="card-text">Accurate urine tests for various health conditions.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-    <!-- Services Section -->
-    <section id="services" class="mt-5" data-aos="fade-up" data-aos-duration="100">
-      <h1 class="text-center mb-4 text-success">Our Services</h1>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="card border-success">
-            <img src="https://images.pexels.com/photos/8940479/pexels-photo-8940479.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" class="card-img-top" alt="Service 1" />
-            <div class="card-body">
-              <h5 class="card-title text-success">Blood Tests</h5>
-              <p class="card-text">Blood tests to evaluate your overall health.</p>
-            </div>
+      <!-- Contact Section -->
+      <section id="contact" class="mt-5" data-aos="fade-up" data-aos-duration="100">
+        <h1 class="text-center mb-4 text-success">Contact Us</h1>
+        <div class="row">
+          <div class="col-md-6">
+            <img src="https://images.pexels.com/photos/3735712/pexels-photo-3735712.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Contact Us Image" class="img-fluid rounded mb-4" />
+          </div>
+          <div class="col-md-6">
+            <p class="text-success">If you have any questions or would like to schedule an appointment, please feel free to contact us. Our team is here to assist you.</p>
+            <ul class="list-unstyled text-success">
+              <li>
+                <strong>Phone:</strong> +1234567890
+              </li>
+              <li>
+                <strong>Email:</strong> info@ourlab.com
+              </li>
+              <li>
+                <strong>Address:</strong> 123 Lab Street, City, Country
+              </li>
+            </ul>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="card border-success">
-            <img src="https://images.pexels.com/photos/3735763/pexels-photo-3735763.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" class="card-img-top" alt="Service 2" />
-            <div class="card-body">
-              <h5 class="card-title text-success">Genetic Testing</h5>
-              <p class="card-text">Advanced genetic tests to identify genetic disorders.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card border-success">
-            <img src="https://images.pexels.com/photos/954585/pexels-photo-954585.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" class="card-img-top" alt="Service 3" />
-            <div class="card-body">
-              <h5 class="card-title text-success">Urine Tests</h5>
-              <p class="card-text">Accurate urine tests for various health conditions.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="mt-5" data-aos="fade-up" data-aos-duration="100">
-      <h1 class="text-center mb-4 text-success">Contact Us</h1>
-      <div class="row">
-        <div class="col-md-6">
-          <img src="https://images.pexels.com/photos/3735712/pexels-photo-3735712.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Contact Us Image" class="img-fluid rounded mb-4" />
-        </div>
-        <div class="col-md-6">
-          <p class="text-success">If you have any questions or would like to schedule an appointment, please feel free to contact us. Our team is here to assist you.</p>
-          <ul class="list-unstyled text-success">
-            <li>
-              <strong>Phone:</strong> +1234567890
-            </li>
-            <li>
-              <strong>Email:</strong> info@ourlab.com
-            </li>
-            <li>
-              <strong>Address:</strong> 123 Lab Street, City, Country
-            </li>
-          </ul>
-        </div>
-      </div>
-    </section>
-  </div>
+      </section>
+    </div>
+  {% endif %}
 
   <!-- Styles -->
   <style>
