@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<br>
+<body style="background-image: url('https://images.pexels.com/photos/248152/pexels-photo-248152.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); background-size: cover; background-repeat: no-repeat; background-position: center;">
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
@@ -39,4 +39,15 @@
         </div>
     </div>
 </div>
+</body>
+<style>
+    .card{
+    background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
+    backdrop-filter: blur(20px); /* Blurred background */
+    border-radius: 15px; /* Rounded corners */
+    border: 1px solid rgba(255, 255, 255, 0.18); /* Border with transparency */
+    padding: 20px; /* Padding around content */
+    color: black;
+    }
+  </style>
 {% endblock %}
